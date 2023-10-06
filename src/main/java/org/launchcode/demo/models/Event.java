@@ -1,8 +1,6 @@
 package org.launchcode.demo.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -10,14 +8,26 @@ public class Event {
 
     private int id;
     private static int nextId = 1;
+
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
     private String name;
+
     @Size(max = 500, message = "Description too long!")
     private String description;
+
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
+
+    @NotBlank(message = "Location is required")
+    @NotNull(message = "location is required")
+    private String location;
+
+    private final boolean isRegistrationRequired = true;
+
+    @Positive(message = "Number of attendees cannot be under 1")
+    private int numOfAttendees;
 
     public Event(String name, String description, String contactEmail) {
         this.name = name;
