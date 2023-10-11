@@ -1,16 +1,26 @@
 package org.launchcode.demo.models;
 
-import jakarta.validation.constraints.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
+/**
+ * Created by Chris Bay
+ */
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId = 1;
 
     @NotBlank(message = "Name is required")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
 
     @Size(max = 500, message = "Description too long!")
@@ -20,20 +30,13 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    @NotBlank(message = "Location is required")
-    @NotNull(message = "location is required")
-    private String location;
+    private EventType type;
 
-    private final boolean isRegistrationRequired = true;
-
-    @Positive(message = "Number of attendees cannot be under 1")
-    private int numOfAttendees;
-
-    public Event(String name, String description, String contactEmail) {
+    public Event(String name, String description, String contactEmail, EventType type) {
         this.name = name;
         this.description = description;
-        this.id = nextId;
-        nextId++;
+        this.contactEmail = contactEmail;
+        this.type = type;
     }
 
     public Event() {}
@@ -54,16 +57,24 @@ public class Event {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getContactEmail() {
         return contactEmail;
     }
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
