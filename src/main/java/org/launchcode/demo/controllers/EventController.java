@@ -66,7 +66,7 @@ public class EventController {
             }
         }
 
-        return "redirect:";
+        return "redirect:/events";
     }
 
 }
