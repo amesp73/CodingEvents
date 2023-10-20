@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="~{fragments :: head}"></head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class="container">
 
-<header th:replace="~{fragments :: header}"></header>
+<header th:replace="fragments :: header"></header>
 
 <form method="post">
 
@@ -15,7 +15,6 @@
             </label>
         </div>
     </th:block>
-
 
     <input type="submit" value="Delete" class="btn btn-danger">
 </form>

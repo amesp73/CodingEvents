@@ -1,35 +1,26 @@
 package org.launchcode.demo.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Size;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class EventCategory {
-    @Id
-    @GeneratedValue
-    private int id;
-    @NotBlank(message = "Name cannot be blank")
-    @Size(min = 3, message = "Name must be at at least 3 characters!")
+public class EventCategory extends AbstractEntity {
+
+    @Size(min=3, message="Name must be at least 3 characters long")
     private String name;
 
-    public EventCategory(String name) {
+    @OneToMany(mappedBy = "eventCategory")
+    private final List<Event> events = new ArrayList<>();
+
+    public EventCategory(@Size(min = 3, message = "Name must be at least 3 characters long") String name) {
         this.name = name;
     }
 
     public EventCategory() {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -39,21 +30,13 @@ public class EventCategory {
         this.name = name;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
     @Override
     public String toString() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EventCategory that = (EventCategory) o;
-        return id == that.id && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }
